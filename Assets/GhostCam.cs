@@ -48,7 +48,7 @@ public class GhostCam : MonoBehaviour
     float RoteX, RoteY;
     private void shoot()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetMouseButtonDown(0))
         {
             GameObject obj = BulletTong.Dequeue();
             obj.transform.position = cam.transform.position;
@@ -140,14 +140,22 @@ public class GhostCam : MonoBehaviour
 
     }
     Vector3 MousePos;
+    Vector3 RotatVec;
     private void rotating()
     {
-        MouseX = Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
-        MouseY = Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
-        if (isRoationOk)
-        {
-            cam.transform.eulerAngles += new Vector3(MouseY * -1, MouseX, cam.transform.rotation.z) * RotaionSpeed *  Time.deltaTime;
-        }
+
+        if(Input.GetKey(KeyCode.Mouse1) == false) { return; }
+
+        MouseX += Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
+        MouseY += Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
+
+        RotatVec.x = MouseY * -1;
+        RotatVec.y = MouseX; 
+        RotatVec.x = Mathf.Clamp(RotatVec.x, -45, 45);
+
+        
+            cam.transform.rotation = Quaternion.Euler(RotatVec);
+        
         
         Debug.Log($"{MouseX}, {MouseY}");
     }

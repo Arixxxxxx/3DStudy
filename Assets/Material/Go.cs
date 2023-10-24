@@ -15,7 +15,7 @@ public class Go : MonoBehaviour
     private void OnEnable()
     {
 
-        Debug.Log("aa");
+     
        
     }
 
