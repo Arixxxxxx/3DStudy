@@ -49,45 +49,46 @@ public class CameraManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F1))
         {
-           cameras[0].enabled = false;
-            cameras[1].enabled = false;
+            F_BtnCamController(5);
         }
         else if (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKey(KeyCode.F1))
         {
-            cameras[0].enabled = false;
-            cameras[1].enabled = false;
+            F_BtnCamController(5);
         }
 
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F2))
         {
-            cameras[0].enabled = true;
-            cameras[1].enabled = false;
+            F_BtnCamController(0);
         }
         else if (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKey(KeyCode.F2))
         {
-            cameras[0].enabled = true;
-            cameras[1].enabled = false;
+            F_BtnCamController(0);
         }
 
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F3))
         {
-            cameras[0].enabled = false;
-            cameras[1].enabled = true;
+            F_BtnCamController(1);
         }
         else if (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKey(KeyCode.F3))
         {
-            cameras[0].enabled = false;
-            cameras[1].enabled = true;
+            F_BtnCamController(1);
         }
 
     }
 
     public void F_BtnCamController(int Value)
+
     {
         int Count = cameras.Count;
+
         for(int i = 0; i < Count; i++)
         {
+            if(Value > Count)
+            {
+                cameras[i].enabled = false;
+            }
             cameras[i].enabled = Value == i;
+                        
         }
     }
 

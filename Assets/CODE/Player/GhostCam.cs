@@ -13,6 +13,7 @@ public class GhostCam : MonoBehaviour
     [SerializeField] GameObject Bullet;
     [SerializeField] Transform Tong;
     Queue<GameObject> BulletTong = new Queue<GameObject>();
+    private bool camMode;
 
 
     private Vector3 rateteValue; // 현재의 회전값 저장용
@@ -40,6 +41,7 @@ public class GhostCam : MonoBehaviour
         moving();
         rotating();
         shoot();
+        CheakCamMode();
     }
 
     Vector3 MovePos;
@@ -59,6 +61,8 @@ public class GhostCam : MonoBehaviour
     }
     private void moving()
     {
+        if(!camMode) { return;}
+
         if (Input.GetKey(KeyCode.W))
         {
             //cam.transform.position += cam.transform.rotation * Vector3.forward * camSpeed * Time.deltaTime;
@@ -113,6 +117,7 @@ public class GhostCam : MonoBehaviour
     }
     private void RoteMathf()
     {
+        if (!camMode) { return; }
         if (isRoationOk)
         {
             MousePos = cam.ScreenToViewportPoint(Input.mousePosition);
@@ -143,8 +148,8 @@ public class GhostCam : MonoBehaviour
     Vector3 RotatVec;
     private void rotating()
     {
-
-        if(Input.GetKey(KeyCode.Mouse1) == false) { return; }
+        if (!camMode) { return; }
+        if (Input.GetKey(KeyCode.Mouse1) == false) { return; }
 
         MouseX += Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
         MouseY += Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
@@ -158,5 +163,10 @@ public class GhostCam : MonoBehaviour
         
         
         Debug.Log($"{MouseX}, {MouseY}");
+    }
+
+    private void CheakCamMode()
+    {
+        camMode = GameManager.Instance.F_CamModeChaker(1);
     }
 }
