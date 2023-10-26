@@ -9,7 +9,7 @@ public class CameraManager : MonoBehaviour
     public static CameraManager Instance;
 
     private List<Camera> cameras = new List<Camera>();
-
+    bool CamAroundMode;
 
     private void Awake()
     {

@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] float RayDisVlaue;
     private GameManager gm;
     [SerializeField] bool isGround;
+    Camera cam;
+    Vector3 OriginCamPos;
 
     private void Awake()
     {
@@ -37,11 +39,13 @@ public class Player : MonoBehaviour
     private void Start()
     {
         gm = GameManager.Instance;
+        cam  = Camera.main;
+        OriginCamPos = cam.transform.position;
     }
     private void FixedUpdate()
     {
-        //MoveChar();
-        movePlayer();
+        MoveChar();
+        //movePlayer();
     }
 
     private void Update()
@@ -75,26 +79,99 @@ public class Player : MonoBehaviour
     }
 
     float MouseX, MouseY;
+    [SerializeField] Transform Head, Leg;
     Vector3 RotatVec;
     [SerializeField] float mouseSen;
+    [SerializeField] Vector3 PlayerRotY;
+    [SerializeField] Vector3 MovePosCam;
+    [SerializeField] Vector3 PlayerVec;
+    [SerializeField] Vector3 MovePosPlayer;
+    float CamRotSpeed;
+    float MouseYY;
+
+    Vector3 StartVec;
+    Vector3 CurVec;
+
+    float StartMouseY;
+    float CurMouseY;
+    float SumMouseY;
+
+    bool MouseYEnd;
+
+    Vector3 CurCamRot;
+
+
+    
     private void rotating()
     {
         if(!PlayerMode) { return; }
-        if (Input.GetKey(KeyCode.Mouse1) == false) { return; }
+        if (Input.GetKey(KeyCode.Mouse1) == false) 
+        {
+            StartMouseY = 0;
+            CurMouseY = 0;
+            return; 
+        }
+
+        if (!MouseYEnd)
+        {
+            MouseYEnd = true;
+            StartVec = cam.ViewportToWorldPoint(Input.mousePosition);
+            StartMouseY = StartVec.y;
+        }
+        CurVec = cam.ViewportToWorldPoint(Input.mousePosition);
+        CurMouseY = CurVec.y;
+        SumMouseY = StartMouseY - CurMouseY;
+        
 
         MouseX += Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
         MouseY += Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
 
         RotatVec.x = MouseY * -1;
+        MouseYY = Mathf.Sign(RotatVec.x);
         RotatVec.y = MouseX;
         RotatVec.x = Mathf.Clamp(RotatVec.x, -45, 45);
 
+        PlayerRotY = F_GetPlayerPosAndRot("Rot");
+        PlayerVec = F_GetPlayerPosAndRot("Pos");
 
-        transform.rotation = Quaternion.Euler(RotatVec);
+        CurCamRot.x = cam.transform.eulerAngles.x + RotatVec.x;
+
+        transform.rotation = Quaternion.Euler(0, RotatVec.y, 0);
+        //cam.transform.eulerAngles = new Vector3(CurCamRot.x, cam.transform.eulerAngles.y, transform.eulerAngles.z) * CamRotSpeed *Time.deltaTime;
+        cam.transform.LookAt(PlayerVec);
+        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y + SumMouseY, cam.transform.position.z) * Time.deltaTime;
 
 
-        Debug.Log($"{MouseX}, {MouseY}");
+        Debug.Log($"{CurVec}");
+
+        //if (MouseYY > 0)
+        //{
+        //    cam.transform.position += cam.transform.TransformDirection(Vector3.up * CamRotSpeed * Time.deltaTime);
+
+        //}
+        //if (MouseYY < 0)
+        //{
+        //    if (cam.transform.position.y < 0)
+        //    {
+        //        return;
+        //    }
+        //    cam.transform.position += cam.transform.TransformDirection(Vector3.down * CamRotSpeed *  Time.deltaTime);
+        //}
+        //else if (MouseY < 0)
+        // {
+        //     Debug.Log("¾Æ·¡·Î");
+
+        // }
+        //else if(MouseY == 0)
+        // {
+
+        // }
+
+
     }
+
+
+
     private float InputHorizontal()
     {
         //return Input.GetAxisRaw("Horizontal");

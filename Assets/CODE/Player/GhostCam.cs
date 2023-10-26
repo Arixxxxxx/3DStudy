@@ -14,6 +14,7 @@ public class GhostCam : MonoBehaviour
     [SerializeField] Transform Tong;
     Queue<GameObject> BulletTong = new Queue<GameObject>();
     private bool camMode;
+    private bool camAroundMode;
 
 
     private Vector3 rateteValue; // 현재의 회전값 저장용
@@ -40,8 +41,9 @@ public class GhostCam : MonoBehaviour
     {
         moving();
         rotating();
-        shoot();
+        //shoot();
         CheakCamMode();
+        AroundMode();
     }
 
     Vector3 MovePos;
@@ -110,10 +112,17 @@ public class GhostCam : MonoBehaviour
         {
             isRoationOk = false;
         }
-        
+     }
 
+    [SerializeField] float aroundSpeed;
+    private void AroundMode()
+    {
+        if (!camAroundMode)    
+        {
+            return;
+        }
 
-
+        Camera.main.transform.RotateAround(Player.instance.transform.position, Vector3.up, aroundSpeed * Time.deltaTime);
     }
     private void RoteMathf()
     {
@@ -168,5 +177,6 @@ public class GhostCam : MonoBehaviour
     private void CheakCamMode()
     {
         camMode = GameManager.Instance.F_CamModeChaker(1);
+        camAroundMode = GameManager.Instance.F_CamModeChaker(2);
     }
 }
