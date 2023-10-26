@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     [SerializeField] Vector3 MovePosCam;
     [SerializeField] Vector3 PlayerVec;
     [SerializeField] Vector3 MovePosPlayer;
-    float CamRotSpeed;
+    [SerializeField] float CamRotSpeed;
     float MouseYY;
 
     Vector3 StartVec;
@@ -100,8 +100,24 @@ public class Player : MonoBehaviour
 
     Vector3 CurCamRot;
 
+    private void CamZoomin(string Value)
+    {
+        switch (Value)
+        {
 
-    
+            case "IN":
+
+                break;
+
+            case "OUT":
+
+                break;
+
+        }
+
+    }
+
+    float curVecY;
     private void rotating()
     {
         if(!PlayerMode) { return; }
@@ -118,17 +134,19 @@ public class Player : MonoBehaviour
             StartVec = cam.ViewportToWorldPoint(Input.mousePosition);
             StartMouseY = StartVec.y;
         }
-        CurVec = cam.ViewportToWorldPoint(Input.mousePosition);
-        CurMouseY = CurVec.y;
-        SumMouseY = StartMouseY - CurMouseY;
-        
-
-        MouseX += Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
-        MouseY += Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
+       
+        MouseX = Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
+        MouseY = Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
+        RotatVec.y = MouseX; // ÁÂ¿ì¹æÇâ
+        transform.rotation *= Quaternion.Euler(0, RotatVec.y, 0);
 
         RotatVec.x = MouseY * -1;
-        MouseYY = Mathf.Sign(RotatVec.x);
-        RotatVec.y = MouseX;
+        
+        Debug.Log($"MouseX = {MouseY}, MouseY = {RotatVec.x}");
+
+        
+        MouseYY = Mathf.Sign(MouseY);
+        
         RotatVec.x = Mathf.Clamp(RotatVec.x, -45, 45);
 
         PlayerRotY = F_GetPlayerPosAndRot("Rot");
@@ -136,25 +154,51 @@ public class Player : MonoBehaviour
 
         CurCamRot.x = cam.transform.eulerAngles.x + RotatVec.x;
 
-        transform.rotation = Quaternion.Euler(0, RotatVec.y, 0);
-        //cam.transform.eulerAngles = new Vector3(CurCamRot.x, cam.transform.eulerAngles.y, transform.eulerAngles.z) * CamRotSpeed *Time.deltaTime;
+       
         cam.transform.LookAt(PlayerVec);
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y + SumMouseY, cam.transform.position.z) * Time.deltaTime;
+        if(RotatVec.x > 0)
+        {
+            if (cam.transform.position.y > 8)
+            {
+                cam.transform.position = new Vector3(cam.transform.position.x, 8, cam.transform.position.z);
+            }
+            cam.transform.position += cam.transform.TransformDirection(new Vector3(0, cam.transform.position.y + RotatVec.x, 0)) * Time.deltaTime;
+        }
+        else if(RotatVec.x < 0)
+        {
+            if(cam.transform.position.y < 0.5f)
+            {
+                cam.transform.position = new Vector3(cam.transform.position.x, 0.5f, cam.transform.position.z);
+            }
+            cam.transform.position -= cam.transform.TransformDirection(new Vector3(0, cam.transform.position.y - RotatVec.x, 0)) * Time.deltaTime;
+
+        }
+        
 
 
-        Debug.Log($"{CurVec}");
+        //Debug.Log($"{MouseX} / {CurMouseY}  / {SumMouseY} ");
 
         //if (MouseYY > 0)
         //{
+        //    if (cam.transform.position.y > 8) 
+        //    {
+        //        return;
+        //    }
         //    cam.transform.position += cam.transform.TransformDirection(Vector3.up * CamRotSpeed * Time.deltaTime);
+
+        //}
+        //else if(MouseYY < 0)
+        //{
+        //    if (cam.transform.position.y < 0.5f)
+        //    {
+        //        return;
+        //    }
+        //    cam.transform.position -= cam.transform.TransformDirection(Vector3.up * CamRotSpeed * Time.deltaTime);
 
         //}
         //if (MouseYY < 0)
         //{
-        //    if (cam.transform.position.y < 0)
-        //    {
-        //        return;
-        //    }
+        //   
         //    cam.transform.position += cam.transform.TransformDirection(Vector3.down * CamRotSpeed *  Time.deltaTime);
         //}
         //else if (MouseY < 0)
@@ -210,6 +254,14 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKeyDown(KeyCode.A))
         {
             transform.eulerAngles += Vector3.down * moveSpeed;
+        }
+        if (Input.GetKey(KeyCode.Q) || Input.GetKeyDown(KeyCode.Q))
+        {
+            Rb.velocity = transform.TransformDirection(Vector3.left) * moveSpeed;
+        }
+        if (Input.GetKey(KeyCode.E) || Input.GetKeyDown(KeyCode.E))
+        {
+            Rb.velocity = transform.TransformDirection(Vector3.right) * moveSpeed;
         }
     }
 

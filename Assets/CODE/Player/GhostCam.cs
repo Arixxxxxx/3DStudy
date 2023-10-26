@@ -160,8 +160,8 @@ public class GhostCam : MonoBehaviour
         if (!camMode) { return; }
         if (Input.GetKey(KeyCode.Mouse1) == false) { return; }
 
-        MouseX += Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
-        MouseY += Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
+        MouseX = Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
+        MouseY = Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
 
         RotatVec.x = MouseY * -1;
         RotatVec.y = MouseX; 
