@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -42,7 +41,7 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        OnOffCamera();
+        //OnOffCamera();
     }
 
     private void OnOffCamera()

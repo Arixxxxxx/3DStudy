@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private Vector3 CemaraRotVec;
     bool once, once1;
     Player PL;
+    PlayerController Players;
     
     private void Awake()
     {
@@ -26,20 +27,21 @@ public class GameManager : MonoBehaviour
             Destroy(Instance);
         }
 
-        CemaraPosVec = new Vector3(0, 4.45f, -8);
-        CemaraRotVec = new Vector3(18.3f, 0, 0);
+        //CemaraPosVec = new Vector3(0, 4.45f, -8);
+        //CemaraRotVec = new Vector3(18.3f, 0, 0);
     }
 
     void Start()
     {
         PL = Player.instance;
+        Players = PlayerController.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ModeChanger();
-        CameraSetParent();
+        //ModeChanger();
+        //CameraSetParent();
     }
 
     private void CameraSetParent()
@@ -48,11 +50,11 @@ public class GameManager : MonoBehaviour
         {
             once = true;
             once1 = false;
-            Camera.main.transform.SetParent(GameObject.Find("Player").transform);
-            Camera.main.transform.position = PL.transform.position;
-            Camera.main.transform.rotation = PL.transform.rotation;
+            Camera.main.transform.SetParent(GameObject.Find("Player (Contoller)").transform);
+            Camera.main.transform.position = Players.transform.position;
+            //Camera.main.transform.rotation = Players.transform.rotation;
             Camera.main.transform.localPosition = new Vector3(0, 3.9f, -7);
-            Camera.main.transform.eulerAngles = new Vector3(20,0,0); 
+            Camera.main.transform.rotation = Quaternion.Euler(20, 0, 0);
         }
         else if(CamMode && !once1)
         {

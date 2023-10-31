@@ -42,8 +42,8 @@ public class GhostCam : MonoBehaviour
         moving();
         rotating();
         //shoot();
-        CheakCamMode();
-        AroundMode();
+        //CheakCamMode();
+        //AroundMode();
     }
 
     Vector3 MovePos;
@@ -63,7 +63,7 @@ public class GhostCam : MonoBehaviour
     }
     private void moving()
     {
-        if(!camMode) { return;}
+        //if(!camMode) { return;}
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -157,8 +157,7 @@ public class GhostCam : MonoBehaviour
     Vector3 RotatVec;
     private void rotating()
     {
-        if (!camMode) { return; }
-        if (Input.GetKey(KeyCode.Mouse1) == false) { return; }
+                if (Input.GetKey(KeyCode.Mouse1) == false) { return; }
 
         MouseX = Input.GetAxisRaw("Mouse X") * mouseSen * Time.deltaTime;
         MouseY = Input.GetAxisRaw("Mouse Y") * mouseSen * Time.deltaTime;
@@ -168,15 +167,15 @@ public class GhostCam : MonoBehaviour
         RotatVec.x = Mathf.Clamp(RotatVec.x, -45, 45);
 
         
-            cam.transform.rotation = Quaternion.Euler(RotatVec);
+        cam.transform.rotation = Quaternion.Euler(new Vector3(RotatVec.x, 0, Camera.main.transform.rotation.z));
         
         
         Debug.Log($"{MouseX}, {MouseY}");
     }
 
-    private void CheakCamMode()
-    {
-        camMode = GameManager.Instance.F_CamModeChaker(1);
-        camAroundMode = GameManager.Instance.F_CamModeChaker(2);
-    }
+    //private void CheakCamMode()
+    //{
+    //    camMode = GameManager.Instance.F_CamModeChaker(1);
+    //    camAroundMode = GameManager.Instance.F_CamModeChaker(2);
+    //}
 }
