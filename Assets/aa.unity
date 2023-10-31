@@ -227,7 +227,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   - {fileID: 2100000, guid: 349e128fe4cadb040a659efc00795958, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1102,6 +1102,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1366510349}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &175281775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 175281776}
+  m_Layer: 0
+  m_Name: Tong
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &175281776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175281775}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &177452676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,7 +1801,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   - {fileID: 2100000, guid: 201a15f1a92313c4db031ae29341f30a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -3172,7 +3203,7 @@ GameObject:
   - component: {fileID: 596830384}
   m_Layer: 0
   m_Name: Objects
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4501,7 +4532,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   - {fileID: 2100000, guid: 349e128fe4cadb040a659efc00795958, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -6385,7 +6416,7 @@ GameObject:
   - component: {fileID: 1380537732}
   m_Layer: 3
   m_Name: Gyedan (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6999,6 +7030,7 @@ GameObject:
   - component: {fileID: 1476168182}
   - component: {fileID: 1476168185}
   - component: {fileID: 1476168184}
+  - component: {fileID: 1476168186}
   m_Layer: 0
   m_Name: BackHand
   m_TagString: Untagged
@@ -7015,7 +7047,7 @@ Transform:
   m_GameObject: {fileID: 1476168181}
   serializedVersion: 2
   m_LocalRotation: {x: -0.03165701, y: -0.031133449, z: -0.0009865654, w: 0.9990133}
-  m_LocalPosition: {x: 0.547, y: -0.149, z: 0.487}
+  m_LocalPosition: {x: 0.578, y: -0.178, z: 0.033}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7075,6 +7107,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476168181}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1476168186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476168181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c720f12de28d648a15e32d6337d65d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimDis: 200
+  obj_bullet: {fileID: 2480344993687038414, guid: 31121640dec87b1438facb39d15c9aa5, type: 3}
+  bullet_Hole: {fileID: 273743050}
+  bullet_Tong: {fileID: 175281776}
+  shootingSpeed: 0.2
 --- !u!1 &1485591048
 GameObject:
   m_ObjectHideFlags: 0
@@ -7513,7 +7562,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 35
+  m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -8194,7 +8243,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   - {fileID: 2100000, guid: 201a15f1a92313c4db031ae29341f30a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -8854,7 +8903,7 @@ GameObject:
   - component: {fileID: 1776845992}
   m_Layer: 3
   m_Name: Gyedan
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10314,7 +10363,7 @@ GameObject:
   - component: {fileID: 1968539908}
   m_Layer: 3
   m_Name: Gyedan (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11281,3 +11330,4 @@ SceneRoots:
   - {fileID: 1380537732}
   - {fileID: 470852963}
   - {fileID: 2127648869}
+  - {fileID: 175281776}

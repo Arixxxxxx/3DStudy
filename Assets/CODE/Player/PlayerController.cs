@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isJump;
     bool mouseRightClick;
     bool zoomin;
+    CinemachineFramingTransposer Trsposer;
+    CinemachinePOV CamPov;
+
     private void OnDrawGizmos()
     {
         if(cCon == null)
@@ -49,7 +52,9 @@ public class PlayerController : MonoBehaviour
         }
 
         cCon = GetComponent<CharacterController>();
-        
+        Trsposer = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
+        CamPov = cam.GetCinemachineComponent<CinemachinePOV>();
+
     }
     private void Start()
     {
@@ -72,6 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         mouseRightClick = Input.GetMouseButtonDown(1);
     }
+    bool once;
     private void camZoom()
     {
         if (mouseRightClick)
@@ -79,24 +85,25 @@ public class PlayerController : MonoBehaviour
             zoomin = !zoomin;
         }
 
-        if (zoomin)
+        if (zoomin && !once)
         {
-
+            once = true;
             Vector3 offest = new Vector3(2f, 0.5f, 2.5f);
             Aim.enabled = true;
             Dot.enabled = false;
-            cam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offest;
-            cam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 150;
+            Trsposer.m_TrackedObjectOffset = offest;
+            CamPov.m_HorizontalAxis.m_MaxSpeed = 150;
             
         }
 
-        else
+        else if(!zoomin && once)
         {
+            once = false;
             Vector3 offest = new Vector3(0.5f,1.5f,0);
             Dot.enabled = true;
             Aim.enabled = false;
-            cam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = offest;
-            cam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.m_MaxSpeed = 250;
+            Trsposer.m_TrackedObjectOffset = offest;
+            CamPov.m_HorizontalAxis.m_MaxSpeed = 250;
         }
     }
     private void cheakGround()
